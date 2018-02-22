@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Demo for the type-write-animation webcomponent</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+        <link rel="import" href="../type-write-animation.html">
+
+        <style type="text/css">
+        .wrapper {
+            font-family: sans-serif;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            padding-top: 50px;
+        }
+        </style>
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <div>
+                <h1>This is a demo of the type-write-animation element</h1>
+                <h4>
+                    The following properties are available for you to customize this element.<br>
+
+                </h4>
+                <!-- The demo element -->
+                <div class="container">
+                    <type-write-animation text-Array="['One', 'Two', 'Three', 'Four']"></type-write-animation>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

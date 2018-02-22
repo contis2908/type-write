@@ -1,0 +1,29 @@
+{
+  "name": "typeride",
+  "description": "A full-page documentation for a type rider animated webcomponent",
+  "main": "index.html",
+  "keywords": [
+    "Polymer",
+    "type",
+    "rider",
+    "webcomponents"
+  ],
+  "authors": [
+    "Niklas Lang"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^3.0.1"
+  },
+  "devDependencies": {
+    "iron-component-page": "^3.0.1"
+  }
+}

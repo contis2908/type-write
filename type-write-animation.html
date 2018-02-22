@@ -1,0 +1,121 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<dom-module id="type-write-animation">
+    <template>
+        <style>
+         :host {
+            display: block;
+            color: #334d5c;
+        }
+        </style>
+        <!-- Element content -->
+        <span id="typeWriteContainer" class="typewrite" style$="color:[[color]];">
+            <span class="wrap"></span>
+        </span>
+    </template>
+    <script>
+    Polymer({
+        is: 'type-write-animation',
+        properties: {
+            textArray: {
+                type: Array,
+                value: function() {
+                    return ["One", "Two", "Three", "Four"]
+                }
+            },
+
+            timeBetween: {
+                type: Number,
+                value: 1000
+            },
+
+            color: {
+                type: String,
+                value: '#334d5c'
+            },
+
+            writeSpeed: {
+                type: Number,
+                value: 80
+            },
+
+            removeSpeed: {
+                type: Number,
+                value: 20
+            },
+
+            cursorThicknes: {
+                type: Number,
+                value: 0.09
+            }
+        },
+
+        attached: function() {
+            // main scope
+            var me = this;
+
+            var TxtType = function(parentElement, textArray) {
+                this.textData = textArray;
+                this.parentElm = parentElement;
+                this.loopNum = 0;
+                this.txt = '';
+                this.tick();
+                this.isDeleting = false;
+            };
+
+            TxtType.prototype.tick = function() {
+                var i = this.loopNum % this.textData.length;
+                var fullTxt = this.textData[i];
+
+                if (this.isDeleting) {
+                    this.txt = fullTxt.substring(0, this.txt.length - 1);
+                } else {
+                    this.txt = fullTxt.substring(0, this.txt.length + 1);
+                }
+
+                Polymer.dom(this.parentElm).innerHTML = '<span class="wrap">' + this.txt + '</span>';
+
+                // Inner scope
+                var that = this;
+
+                if (!this.isDeleting && this.txt === fullTxt) {
+                    // text is fully drawen
+                    setTimeout(function() {
+                        that.isDeleting = true;
+                    }, me.timeBetween);
+
+                } else if (this.isDeleting && this.txt === '') {
+                    // text is fully removed
+                    this.isDeleting = false;
+                    this.loopNum++;
+                }
+
+                if (this.isDeleting) {
+                    setTimeout(function() {
+                        that.tick();
+                    }, me.removeSpeed);
+                }
+
+                if (!this.isDeleting) {
+                    setTimeout(function() {
+                        that.tick();
+                    }, me.writeSpeed);
+                }
+
+            };
+
+
+            // start animation with parent Element & user specific properties such as text and time
+            if (this.textArray) {
+                new TxtType(this.$.typeWriteContainer, this.textArray);
+            }
+
+            // Inject css for custom cursor thicknes and color
+            var css = document.createElement("style");
+            css.type = "text/css";
+            css.innerHTML = ".typewrite > .wrap { border-right:" + this.cursorThicknes + "em solid" + this.color + "}";
+
+            Polymer.dom(this.root).appendChild(css)
+        }
+    });
+    </script>
+</dom-module>
