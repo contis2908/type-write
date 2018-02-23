@@ -1,20 +1,20 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<dom-module id="type-write-animation">
+<dom-module id="type-writer-animation">
     <template>
         <style>
          :host {
             display: block;
-            color: #334d5c;
+            color: black;
         }
         </style>
         <!-- Element content -->
         <span id="typeWriteContainer" class="typewrite" style$="color:[[color]];">
-            <span class="wrap"></span>
+            <span class="wrap">[[txt]]</span>
         </span>
     </template>
     <script>
     Polymer({
-        is: 'type-write-animation',
+        is: 'type-writer-animation',
         properties: {
             textArray: {
                 type: Array,
@@ -22,10 +22,15 @@
                     return ["One", "Two", "Three", "Four"]
                 }
             },
-
-            timeBetween: {
+            // Customization
+            timeTillRemove: {
                 type: Number,
-                value: 1000
+                value: 800
+            },
+
+            timeTillWrite: {
+                type: Number,
+                value: 100
             },
 
             color: {
@@ -40,82 +45,116 @@
 
             removeSpeed: {
                 type: Number,
-                value: 20
+                value: 3
             },
 
             cursorThicknes: {
                 type: Number,
                 value: 0.09
+            },
+            // Function related
+            loopNum: {
+                type: Number,
+                value: 0
+            },
+            txt: {
+                type: String,
+                value: ''
+            },
+            isDeleting: {
+                type: Boolean,
+                value: false
+            },
+            fullTxt: {
+                type: String
             }
         },
 
         attached: function() {
-            // main scope
-            var me = this;
 
-            var TxtType = function(parentElement, textArray) {
-                this.textData = textArray;
-                this.parentElm = parentElement;
-                this.loopNum = 0;
-                this.txt = '';
-                this.tick();
-                this.isDeleting = false;
-            };
-
-            TxtType.prototype.tick = function() {
-                var i = this.loopNum % this.textData.length;
-                var fullTxt = this.textData[i];
-
-                if (this.isDeleting) {
-                    this.txt = fullTxt.substring(0, this.txt.length - 1);
-                } else {
-                    this.txt = fullTxt.substring(0, this.txt.length + 1);
-                }
-
-                Polymer.dom(this.parentElm).innerHTML = '<span class="wrap">' + this.txt + '</span>';
-
-                // Inner scope
-                var that = this;
-
-                if (!this.isDeleting && this.txt === fullTxt) {
-                    // text is fully drawen
-                    setTimeout(function() {
-                        that.isDeleting = true;
-                    }, me.timeBetween);
-
-                } else if (this.isDeleting && this.txt === '') {
-                    // text is fully removed
-                    this.isDeleting = false;
-                    this.loopNum++;
-                }
-
-                if (this.isDeleting) {
-                    setTimeout(function() {
-                        that.tick();
-                    }, me.removeSpeed);
-                }
-
-                if (!this.isDeleting) {
-                    setTimeout(function() {
-                        that.tick();
-                    }, me.writeSpeed);
-                }
-
-            };
-
-
-            // start animation with parent Element & user specific properties such as text and time
-            if (this.textArray) {
-                new TxtType(this.$.typeWriteContainer, this.textArray);
-            }
-
-            // Inject css for custom cursor thicknes and color
+            // Inject css for custom cursor color and thicknes
             var css = document.createElement("style");
             css.type = "text/css";
             css.innerHTML = ".typewrite > .wrap { border-right:" + this.cursorThicknes + "em solid" + this.color + "}";
+            Polymer.dom(this.root).appendChild(css);
 
-            Polymer.dom(this.root).appendChild(css)
+            if (this.textArray) {
+                this.controllWrite();
+            }
+        },
+
+        controllWrite: function() {
+            var that = this;
+
+            var i = this.loopNum % this.textArray.length;
+            if (this.loopNum >= this.textArray.length) {
+                this.loopNum = 0;
+                var i = this.loopNum % this.textArray.length;
+            }
+            this.fullTxt = this.textArray[i];
+            // console.log('!!!START!!!', this.fullTxt, this.loopNum, this.loopNum % this.textArray.length);
+
+
+            if (!this.isDeleting && this.txt === this.fullTxt) {
+                // text is fully drawen start deletion
+                // console.log('!!!DONE, START DELETE!!!');
+                setTimeout(function() {
+                    that.isDeleting = true;
+                    that.delete();
+                    return
+                }, this.timeTillRemove);
+
+            } else if (this.isDeleting && this.txt === '') {
+                // text is fully removed start drawing next
+                // console.log('!!!DONE DELETING, START DRAW!!!');
+                setTimeout(function() {
+                    that.isDeleting = false;
+                    that.loopNum++;
+                    that.write();
+                    return
+                }, this.timeTillWrite);
+
+            } else if (this.isDeleting) {
+                // not finished deleting go on
+                // console.log('!!!KEEP DELETING!!!', this.isDeleting);
+                if (this.removeSpeed <= 1) {
+                    var instand = true;
+                }
+                setTimeout(function() {
+                    that.delete(instand);
+                    return
+                }, this.removeSpeed);
+
+            } else if (!this.isDeleting) {
+                // not finished drawing go on
+                // console.log('!!!KEEP DRAWING!!!');
+                setTimeout(function() {
+                    that.write();
+                    return
+                }, this.writeSpeed);
+            }
+        },
+
+        write: function() {
+            if (!this.isDeleting) {
+                this.txt = this.fullTxt.substring(0, this.txt.length + 1);
+                // console.log('!!!DRAW!!!', this.txt);
+            }
+            this.controllWrite();
+        },
+
+        delete: function(instand) {
+            if (this.isDeleting) {
+                if (instand == true) {
+                    this.txt = '';
+                } else {
+                    this.txt = this.fullTxt.substring(0, this.txt.length - 1);
+                    // console.log('!!!DELETE!!!', this.txt);
+                }
+            }
+            this.controllWrite();
         }
+
     });
     </script>
 </dom-module>
