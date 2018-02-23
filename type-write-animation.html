@@ -1,5 +1,5 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
-<dom-module id="type-writer-animation">
+<link rel="import" href="bower_components/polymer/polymer.html">
+<dom-module id="type-write-animation">
     <template>
         <style>
          :host {
@@ -8,18 +8,18 @@
         }
         </style>
         <!-- Element content -->
-        <span id="typeWriteContainer" class="typewrite" style$="color:[[color]];">
-            <span class="wrap">[[txt]]</span>
+        <span style$="color:[[color]];">
+            <span class="wrap" style$="border-right:[[cursorThicknes]]px solid; color:[[color]];">[[txt]]</span>
         </span>
     </template>
     <script>
     Polymer({
-        is: 'type-writer-animation',
+        is: 'type-write-animation',
         properties: {
             textArray: {
                 type: Array,
                 value: function() {
-                    return ["One", "Two", "Three", "Four"]
+                    return ["The typewrite webcomponent", "Feel free to use & improve this element"]
                 }
             },
             // Customization
@@ -30,7 +30,7 @@
 
             timeTillWrite: {
                 type: Number,
-                value: 100
+                value: 400
             },
 
             color: {
@@ -50,8 +50,9 @@
 
             cursorThicknes: {
                 type: Number,
-                value: 0.09
+                value: 5
             },
+
             // Function related
             loopNum: {
                 type: Number,
@@ -71,13 +72,6 @@
         },
 
         attached: function() {
-
-            // Inject css for custom cursor color and thicknes
-            var css = document.createElement("style");
-            css.type = "text/css";
-            css.innerHTML = ".typewrite > .wrap { border-right:" + this.cursorThicknes + "em solid" + this.color + "}";
-            Polymer.dom(this.root).appendChild(css);
-
             if (this.textArray) {
                 this.controllWrite();
             }
@@ -92,12 +86,10 @@
                 var i = this.loopNum % this.textArray.length;
             }
             this.fullTxt = this.textArray[i];
-            // console.log('!!!START!!!', this.fullTxt, this.loopNum, this.loopNum % this.textArray.length);
 
 
             if (!this.isDeleting && this.txt === this.fullTxt) {
                 // text is fully drawen start deletion
-                // console.log('!!!DONE, START DELETE!!!');
                 setTimeout(function() {
                     that.isDeleting = true;
                     that.delete();
@@ -106,7 +98,6 @@
 
             } else if (this.isDeleting && this.txt === '') {
                 // text is fully removed start drawing next
-                // console.log('!!!DONE DELETING, START DRAW!!!');
                 setTimeout(function() {
                     that.isDeleting = false;
                     that.loopNum++;
@@ -116,7 +107,6 @@
 
             } else if (this.isDeleting) {
                 // not finished deleting go on
-                // console.log('!!!KEEP DELETING!!!', this.isDeleting);
                 if (this.removeSpeed <= 1) {
                     var instand = true;
                 }
@@ -127,7 +117,6 @@
 
             } else if (!this.isDeleting) {
                 // not finished drawing go on
-                // console.log('!!!KEEP DRAWING!!!');
                 setTimeout(function() {
                     that.write();
                     return
@@ -138,7 +127,6 @@
         write: function() {
             if (!this.isDeleting) {
                 this.txt = this.fullTxt.substring(0, this.txt.length + 1);
-                // console.log('!!!DRAW!!!', this.txt);
             }
             this.controllWrite();
         },
@@ -149,7 +137,6 @@
                     this.txt = '';
                 } else {
                     this.txt = this.fullTxt.substring(0, this.txt.length - 1);
-                    // console.log('!!!DELETE!!!', this.txt);
                 }
             }
             this.controllWrite();
