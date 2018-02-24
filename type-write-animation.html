@@ -4,13 +4,74 @@
         <style>
          :host {
             display: block;
-            color: black;
+            color: #334d5c;
+        }
+
+        .cursorAnimation {
+            -webkit-animation: 1s blink step-end infinite;
+            -moz-animation: 1s blink step-end infinite;
+            -ms-animation: 1s blink step-end infinite;
+            -o-animation: 1s blink step-end infinite;
+            animation: 1s blink step-end infinite;
+        }
+
+        @keyframes "blink" {
+            from,
+            to {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @-moz-keyframes blink {
+            from,
+            to {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes "blink" {
+            from,
+            to {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @-ms-keyframes "blink" {
+            from,
+            to {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @-o-keyframes "blink" {
+            from,
+            to {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
         }
         </style>
         <!-- Element content -->
         <span style$="color:[[color]];">
             <!-- inline binding for custom css -->
-            <span class="wrap" style$="border-right:[[cursorThicknes]]px solid; color:[[color]];">[[_txt]]</span>
+            <span class="wrap" style$="color:[[color]];">
+                [[_txt]]
+                <span class$="[[animationClass]]" style$="color:[[color]];">[[cursorStyle]]</span>
+            </span>
         </span>
     </template>
     <script>
@@ -54,11 +115,16 @@
             },
 
             // Cursor thicknes (pixel)
-            cursorThicknes: {
-                type: Number,
-                value: 5
+            cursorStyle: {
+                type: String,
+                value: '|'
             },
 
+            cursorAnimation: {
+                type: Boolean,
+                value: true,
+                observer: '_setCursorAnimation'
+            },
             // Cursor and text color (white, rgb(255,255,255, #ffffff)
             color: {
                 type: String,
@@ -162,6 +228,15 @@
                 console.log('REMOVE:', this._txt);
             }
             this.controllWrite();
+        },
+
+        _setCursorAnimation: function(animation) {
+            console.log('!!!!!!', animation)
+            if (animation == true) {
+                this.set('animationClass', 'cursorAnimation');
+            } else {
+                this.set('animationClass', '');
+            }
         }
 
     });
