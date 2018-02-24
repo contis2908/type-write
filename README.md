@@ -18,7 +18,7 @@ The type-write-animation element has the following properties available that all
 7. Cursor type and blinking animation
 
 
-
+### Basic Demo
 <!--
 ```
 <custom-element-demo>
