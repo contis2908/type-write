@@ -2,12 +2,12 @@
 <html>
 
 <head>
-    <title>Demo for the type-write-animation webcomponent</title>
+    <title>Demo for the type-write webcomponent</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../type-write-animation.html">
+    <link rel="import" href="../type-write.html">
     <style type="text/css">
     .wrapper {
         font-family: sans-serif;
@@ -28,7 +28,7 @@
         padding-top: 50px;
     }
 
-    type-write-animation {
+    type-write {
         font-size: 25px;
     }
     </style>
@@ -37,11 +37,10 @@
 <body>
     <div class="wrapper">
         <div>
-            <h1>This is a demo of the type-write-animation element</h1>
+            <h1>This is a demo of the type-write element</h1>
             <!-- The demo element -->
             <div class="container">
-                <type-write-animation text-array='["This is a webcomponent...", "...that will mimic a type writer"]'>
-                </type-write-animation>
+                <type-write text-array='["This is a webcomponent...", "...that will mimic a type writer"]'></type-write>
             </div>
         </div>
     </div>

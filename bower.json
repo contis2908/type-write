@@ -1,6 +1,6 @@
 {
-  "name": "typeride",
-  "description": "A full-page documentation for a type rider animated webcomponent",
+  "name": "type-write",
+  "description": "The type-write webcomponent mimics a type writer effect",
   "main": "index.html",
   "keywords": [
     "Polymer",

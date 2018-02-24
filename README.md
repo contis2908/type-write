@@ -1,5 +1,5 @@
-# The typewrite web-component
-This is a Polymer web-component that mimics a type writer effect.
+# The type-write web-component
+This is a Polymer web-component that mimics a type writer effect. <br/>
 Feel free to use it in your projects or to fork and contribute to it.
 
 ----
@@ -7,7 +7,7 @@ Feel free to use it in your projects or to fork and contribute to it.
 This Element is currently using Polymer 1 but will be updated shortly to the latest version.
 
 ### Features
-The type-write-animation element has the following properties available that allow its customization:
+The type-write element has the following properties available that allow its customization:
 
 1. An array for its text content
 2. Character type speed
@@ -23,12 +23,12 @@ The type-write-animation element has the following properties available that all
 ```
 <custom-element-demo>
   <template>
-    <link rel="import" href="type-write-animation.html">
+    <link rel="import" href="type-write.html">
     <next-code-block></next-code-block>
   </template>
 </custom-element-demo>
 ```
 -->
 ```html
-<type-write-animation text-array='["This is a demo...", "...of the type-write-animation element"]'></type-write-animation>
+<type-write text-array='["This is a demo...", "...of the type-write-animation element"]'></type-write>
 ```
