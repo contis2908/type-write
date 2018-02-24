@@ -30,5 +30,5 @@ The type-write-animation element has the following properties available that all
 ```
 -->
 ```html
-<type-write-animation text-array='["This is a demo...", "...of the type-write-animation element"]'></type-write-animation>
+<type-write-animation text-array='["This is a demo...", "...of the element"]'></type-write-animation>
 ```
