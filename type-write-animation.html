@@ -114,12 +114,13 @@
                 value: 3
             },
 
-            // Cursor thicknes (pixel)
+            // Cursor
             cursorStyle: {
                 type: String,
                 value: '|'
             },
 
+            // Togle blinking cursor
             cursorAnimation: {
                 type: Boolean,
                 value: true,
@@ -215,7 +216,6 @@
         // Writes characters 
         write: function() {
             this._txt = this._fullTxt.substring(0, this._txt.length + 1);
-            console.log('WRITE:', this._txt);
             this.controllWrite();
         },
 
@@ -225,14 +225,13 @@
                 this._txt = '';
             } else {
                 this._txt = this._fullTxt.substring(0, this._txt.length - 1);
-                console.log('REMOVE:', this._txt);
             }
             this.controllWrite();
         },
 
+        // Toggle the cursor animtion
         _setCursorAnimation: function(animation) {
-            console.log('!!!!!!', animation)
-            if (animation == true) {
+            if (animation) {
                 this.set('animationClass', 'cursorAnimation');
             } else {
                 this.set('animationClass', '');
