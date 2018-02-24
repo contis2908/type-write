@@ -1,3 +1,5 @@
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/contis2908/type-write)
+
 # The type-write web-component
 This is a Polymer web-component that mimics a type writer effect. <br/>
 Feel free to use it in your projects or to fork and contribute to it.
