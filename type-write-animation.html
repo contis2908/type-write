@@ -9,64 +9,85 @@
         </style>
         <!-- Element content -->
         <span style$="color:[[color]];">
-            <span class="wrap" style$="border-right:[[cursorThicknes]]px solid; color:[[color]];">[[txt]]</span>
+            <!-- inline binding for custom css -->
+            <span class="wrap" style$="border-right:[[cursorThicknes]]px solid; color:[[color]];">[[_txt]]</span>
         </span>
     </template>
     <script>
     Polymer({
         is: 'type-write-animation',
         properties: {
+            /* 
+            Properties for the Customization of the element
+            */
+
+            // Text Array to display
             textArray: {
                 type: Array,
                 value: function() {
                     return ["The typewrite webcomponent", "Feel free to use & improve this element"]
                 }
             },
-            // Customization
+            // Time untill remove starts (milliseconds)
             timeTillRemove: {
                 type: Number,
                 value: 800
             },
 
+
+            // Time untill write starts (milliseconds)
             timeTillWrite: {
                 type: Number,
                 value: 400
             },
 
-            color: {
-                type: String,
-                value: '#334d5c'
-            },
-
+            // Writing speed (milliseconds)
             writeSpeed: {
                 type: Number,
                 value: 80
             },
 
+            // Remove speed (milliseconds)
             removeSpeed: {
                 type: Number,
                 value: 3
             },
 
+            // Cursor thicknes (pixel)
             cursorThicknes: {
                 type: Number,
                 value: 5
             },
 
-            // Function related
-            loopNum: {
+            // Cursor and text color (white, rgb(255,255,255, #ffffff)
+            color: {
+                type: String,
+                value: '#334d5c'
+            },
+
+            /* 
+                Properties that are function related 
+            */
+            // Array counter
+            _loopNum: {
                 type: Number,
                 value: 0
             },
-            txt: {
+
+            // Text item
+            _txt: {
                 type: String,
                 value: ''
             },
-            isDeleting: {
+
+            // Deletig state
+            _isDeleting: {
                 type: Boolean,
                 value: false
             },
-            fullTxt: {
+
+            // Fully written item
+            _fullTxt: {
                 type: String
             }
         },
@@ -77,35 +98,36 @@
             }
         },
 
+        // Controls the write and remove 
         controllWrite: function() {
             var that = this;
 
-            var i = this.loopNum % this.textArray.length;
-            if (this.loopNum >= this.textArray.length) {
-                this.loopNum = 0;
-                var i = this.loopNum % this.textArray.length;
+            var i = this._loopNum % this.textArray.length;
+            if (this._loopNum >= this.textArray.length) {
+                this._loopNum = 0;
+                var i = this._loopNum % this.textArray.length;
             }
-            this.fullTxt = this.textArray[i];
+            this._fullTxt = this.textArray[i];
 
 
-            if (!this.isDeleting && this.txt === this.fullTxt) {
-                // text is fully drawen start deletion
+            if (!this._isDeleting && this._txt === this._fullTxt) {
+                // text is fully written start deleting
                 setTimeout(function() {
-                    that.isDeleting = true;
+                    that._isDeleting = true;
                     that.delete();
                     return
                 }, this.timeTillRemove);
 
-            } else if (this.isDeleting && this.txt === '') {
-                // text is fully removed start drawing next
+            } else if (this._isDeleting && this._txt === '') {
+                // text is fully removed start writing the next item
                 setTimeout(function() {
-                    that.isDeleting = false;
-                    that.loopNum++;
-                    that.write();
+                    that._isDeleting = false;
+                    that._loopNum++;
+                    that.controllWrite();
                     return
                 }, this.timeTillWrite);
 
-            } else if (this.isDeleting) {
+            } else if (this._isDeleting) {
                 // not finished deleting go on
                 if (this.removeSpeed <= 1) {
                     var instand = true;
@@ -115,8 +137,8 @@
                     return
                 }, this.removeSpeed);
 
-            } else if (!this.isDeleting) {
-                // not finished drawing go on
+            } else if (!this._isDeleting) {
+                // not finished writing go on
                 setTimeout(function() {
                     that.write();
                     return
@@ -124,20 +146,20 @@
             }
         },
 
+        // Writes characters 
         write: function() {
-            if (!this.isDeleting) {
-                this.txt = this.fullTxt.substring(0, this.txt.length + 1);
-            }
+            this._txt = this._fullTxt.substring(0, this._txt.length + 1);
+            console.log('WRITE:', this._txt);
             this.controllWrite();
         },
 
+        // Removes characters
         delete: function(instand) {
-            if (this.isDeleting) {
-                if (instand == true) {
-                    this.txt = '';
-                } else {
-                    this.txt = this.fullTxt.substring(0, this.txt.length - 1);
-                }
+            if (instand == true) {
+                this._txt = '';
+            } else {
+                this._txt = this._fullTxt.substring(0, this._txt.length - 1);
+                console.log('REMOVE:', this._txt);
             }
             this.controllWrite();
         }
