@@ -18,7 +18,7 @@ The type-write element has the following properties available that allow its cus
 7. Cursor type and blinking animation
 
 
-
+### Basic Demo
 <!--
 ```
 <custom-element-demo>
