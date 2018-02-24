@@ -70,7 +70,7 @@
             <!-- inline binding for custom css -->
             <span class="wrap" style$="color:[[color]];">
                 [[_txt]]
-                <span class$="[[animationClass]]" style$="color:[[color]];">[[cursorStyle]]</span>
+                <span class$="[[animationClass]]" style$="color:[[color]];">[[cursorType]]</span>
             </span>
         </span>
     </template>
@@ -89,12 +89,12 @@
                     return ["The typewrite webcomponent", "Feel free to use & improve this element"]
                 }
             },
+
             // Time untill remove starts (milliseconds)
             timeTillRemove: {
                 type: Number,
                 value: 800
             },
-
 
             // Time untill write starts (milliseconds)
             timeTillWrite: {
@@ -115,7 +115,7 @@
             },
 
             // Cursor
-            cursorStyle: {
+            cursorType: {
                 type: String,
                 value: '|'
             },
