@@ -24,6 +24,7 @@ The type-write element has the following properties available that allow its cus
 <!--
 ```
 <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../polymer/polymer.html">
 <custom-element-demo>
   <template>
     <link rel="import" href="type-write.html">
