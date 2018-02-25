@@ -1,6 +1,9 @@
 {
   "name": "type-write",
   "description": "The type-write webcomponent mimics a type writer effect",
+  "demos": {
+    "Demo": "demo/index.html"
+  },
   "main": "index.html",
   "keywords": [
     "Polymer",
@@ -20,9 +23,6 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^3.0.1"
-  },
   "devDependencies": {
     "iron-component-page": "^3.0.1"
   }
