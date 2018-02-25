@@ -16,8 +16,9 @@ The type-write element has the following properties available that allow its cus
 3. Character deletion speed
 4. Time before write
 5. Time before deletion
-6. Color for cursor & text
-7. Cursor type and blinking animation
+6. Loop control
+7. Color for cursor & text
+8. Cursor type and blinking animation
 
 
 ### Basic Demo

@@ -91,7 +91,7 @@
                 }
             },
 
-            // Loop text
+            // Loop control
             loop: {
                 type: Boolean,
                 value: true
@@ -176,12 +176,12 @@
 
         attached: function() {
             if (this.textArray) {
-                this._controllWrite();
+                this._controlWrite();
             }
         },
 
         // Controls the write and remove 
-        _controllWrite: function() {
+        _controlWrite: function() {
             var that = this;
 
             var i = this._loopTracker % this.textArray.length;
@@ -210,7 +210,7 @@
                 setTimeout(function() {
                     that._isDeleting = false;
                     that._loopTracker++;
-                    that._controllWrite();
+                    that._controlWrite();
                     return
                 }, this.timeTillWrite);
 
@@ -236,7 +236,7 @@
         // Writes characters 
         _write: function() {
             this._txt = this._fullTxt.substring(0, this._txt.length + 1);
-            this._controllWrite();
+            this._controlWrite();
         },
 
         // Removes characters
@@ -246,7 +246,7 @@
             } else {
                 this._txt = this._fullTxt.substring(0, this._txt.length - 1);
             }
-            this._controllWrite();
+            this._controlWrite();
         },
 
         // Toggle the cursor animtion
