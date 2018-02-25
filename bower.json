@@ -1,29 +1,37 @@
 {
-  "name": "type-write",
-  "description": "The type-write webcomponent mimics a type writer effect",
-  "demos": {
-    "Demo": "demo/index.html"
-  },
-  "main": "index.html",
-  "keywords": [
-    "Polymer",
-    "type",
-    "rider",
-    "webcomponents"
-  ],
-  "authors": [
-    "Niklas Lang"
-  ],
-  "license": "MIT",
-  "homepage": "",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "devDependencies": {
-    "iron-component-page": "^3.0.1"
-  }
+    "name": "type-write",
+    "description": "The type-write webcomponent mimics a type writer effect",
+    "demos":
+    {
+        "Demo": "demo/index.html"
+    },
+    "main": "type-write.html",
+    "keywords": [
+        "Polymer",
+        "type",
+        "rider",
+        "webcomponents"
+    ],
+    "authors": [
+        "Niklas Lang"
+    ],
+    "license": "MIT",
+    "homepage": "",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies":
+    {
+        "polymer": "polymer/polymer#^1.11.2"
+    },
+    "devDependencies":
+    {
+        "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+        "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+        "webcomponentsjs": "webcomponents/webcomponentsjs#^1.1.0"
+    }
 }
