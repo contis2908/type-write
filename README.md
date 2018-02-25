@@ -23,10 +23,10 @@ The type-write element has the following properties available that allow its cus
 ### Basic Demo
 <!--
 ```
-<script src="../webcomponentsjs/webcomponents-lite.js"></script>
-<link rel="import" href="../polymer/polymer.html">
 <custom-element-demo>
   <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../polymer/polymer.html">
     <link rel="import" href="type-write.html">
     <next-code-block></next-code-block>
   </template>
