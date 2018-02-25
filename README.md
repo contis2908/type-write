@@ -33,6 +33,10 @@ The type-write element has the following properties available that allow its cus
 </custom-element-demo>
 ```
 -->
+<!--
 ```html
 <type-write text-array='["This is a demo...", "...of the type-write-animation element"]'></type-write>
 ```
+-->
+
+?edeting
