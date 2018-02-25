@@ -1,10 +1,11 @@
-<link rel="import" href="../polymer/polymer.html">
+<!-- <link rel="import" href="../polymer/polymer.html"> -->
+<link rel="import" href="bower_components/polymer/polymer.html">
 <dom-module id="type-write">
     <template>
         <style>
          :host {
             display: block;
-            color: #334d5c;
+            color: black;
         }
 
         .cursorAnimation {
@@ -70,8 +71,8 @@
             <!-- inline binding for custom css -->
             <span class="wrap" style$="color:[[color]];">
                 [[_txt]]
-                <span class$="[[animationClass]]" style$="color:[[color]];">[[cursorType]]</span>
-            </span>
+                <span class$="[[animationClass]]" style$="color:[[color]];" hidden="[[_completedRun]]">[[cursorType]]</span>
+        </span>
         </span>
     </template>
     <script>
@@ -86,8 +87,14 @@
             textArray: {
                 type: Array,
                 value: function() {
-                    return ["The typewrite webcomponent", "Feel free to use & improve this element"]
+                    return ["The type-write webcomponent", "Feel free to use or improve this element"]
                 }
+            },
+
+            // Loop text
+            loop: {
+                type: Boolean,
+                value: true
             },
 
             // Time untill remove starts (milliseconds)
@@ -129,16 +136,24 @@
             // Cursor and text color (white, rgb(255,255,255, #ffffff)
             color: {
                 type: String,
-                value: '#334d5c'
+                value: 'black'
             },
 
             /* 
                 Properties that are function related 
             */
             // Array counter
-            _loopNum: {
+            _loopTracker: {
                 type: Number,
                 value: 0
+            },
+
+            // Fires after write is complete (no loop)
+            completedRun: {
+                type: Boolean,
+                value: false,
+                notify: true,
+                readOnly: true
             },
 
             // Text item
@@ -161,18 +176,23 @@
 
         attached: function() {
             if (this.textArray) {
-                this.controllWrite();
+                this._controllWrite();
             }
         },
 
         // Controls the write and remove 
-        controllWrite: function() {
+        _controllWrite: function() {
             var that = this;
 
-            var i = this._loopNum % this.textArray.length;
-            if (this._loopNum >= this.textArray.length) {
-                this._loopNum = 0;
-                var i = this._loopNum % this.textArray.length;
+            var i = this._loopTracker % this.textArray.length;
+            if (this._loopTracker >= this.textArray.length) {
+                if (!this.loop) {
+                    // if loop is set to falls stop after one run
+                    this.set('_completedRun', true);
+                    return
+                }
+                this._loopTracker = 0;
+                var i = this._loopTracker % this.textArray.length;
             }
             this._fullTxt = this.textArray[i];
 
@@ -181,7 +201,7 @@
                 // text is fully written start deleting
                 setTimeout(function() {
                     that._isDeleting = true;
-                    that.delete();
+                    that._delete();
                     return
                 }, this.timeTillRemove);
 
@@ -189,8 +209,8 @@
                 // text is fully removed start writing the next item
                 setTimeout(function() {
                     that._isDeleting = false;
-                    that._loopNum++;
-                    that.controllWrite();
+                    that._loopTracker++;
+                    that._controllWrite();
                     return
                 }, this.timeTillWrite);
 
@@ -200,33 +220,33 @@
                     var instand = true;
                 }
                 setTimeout(function() {
-                    that.delete(instand);
+                    that._delete(instand);
                     return
                 }, this.removeSpeed);
 
             } else if (!this._isDeleting) {
                 // not finished writing go on
                 setTimeout(function() {
-                    that.write();
+                    that._write();
                     return
                 }, this.writeSpeed);
             }
         },
 
         // Writes characters 
-        write: function() {
+        _write: function() {
             this._txt = this._fullTxt.substring(0, this._txt.length + 1);
-            this.controllWrite();
+            this._controllWrite();
         },
 
         // Removes characters
-        delete: function(instand) {
+        _delete: function(instand) {
             if (instand == true) {
                 this._txt = '';
             } else {
                 this._txt = this._fullTxt.substring(0, this._txt.length - 1);
             }
-            this.controllWrite();
+            this._controllWrite();
         },
 
         // Toggle the cursor animtion
