@@ -19,6 +19,7 @@ The type-write element has the following properties available that allow its cus
 6. Loop control
 7. Color for cursor & text
 8. Cursor type and blinking animation
+9. Stop function to break out of the loop
 
 
 ### Basic Demo
