@@ -70,7 +70,7 @@
             <!-- inline binding for custom css -->
             <span class="wrap" style$="color:[[color]];">
                 [[_txt]]
-                <span class$="[[animationClass]]" style$="color:[[color]];" hidden="[[_completedRun]]">[[cursorType]]</span>
+                <span class$="[[animationClass]]" style$="color:[[color]];display:[[hide]]" hidden="[[_completedRun]]">[[cursorType]]</span>
         </span>
         </span>
     </template>
@@ -181,21 +181,25 @@
         },
 
         attached: function() {
-            var stop = false;
             if (this.textArray) {
-                this._controlWrite(stop);
+                this._controlWrite();
             }
         },
 
-        _toggleAnimation: function(stop) {
-            this._controlWrite(stop);
+        _toggleAnimation: function() {
+            this._controlWrite();
         },
 
         // Controls the write and remove 
-        _controlWrite: function(stop) {
-            if (stop == true) {
+        _controlWrite: function() {
+            
+            if (this.stop == true) {
+                this.hide = 'none';
                 return
+            } else {
+                this.hide = 'initial';
             }
+            if (!this.textArray) {return}
             
             var that = this;
 
@@ -256,6 +260,7 @@
 
         // Removes characters
         _delete: function(instand) {
+            if (!this._fullTxt) {return}
             if (instand == true) {
                 this._txt = '';
             } else {
