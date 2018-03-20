@@ -138,6 +138,13 @@
                 value: 'black'
             },
 
+            // Stop the animation
+            stop: {
+                type: Boolean,
+                value: false,
+                observer: '_toggleAnimation'
+            },
+
             /* 
                 Properties that are function related 
             */
@@ -174,13 +181,22 @@
         },
 
         attached: function() {
+            var stop = false;
             if (this.textArray) {
-                this._controlWrite();
+                this._controlWrite(stop);
             }
         },
 
+        _toggleAnimation: function(stop) {
+            this._controlWrite(stop);
+        },
+
         // Controls the write and remove 
-        _controlWrite: function() {
+        _controlWrite: function(stop) {
+            if (stop == true) {
+                return
+            }
+            
             var that = this;
 
             var i = this._loopTracker % this.textArray.length;
