@@ -199,7 +199,7 @@
             } else {
                 this.hide = 'initial';
             }
-            if (!this.textArray) {return}
+            if (!this.textArray || isNaN(this._loopTracker)) {return}
             
             var that = this;
 
@@ -214,7 +214,6 @@
                 var i = this._loopTracker % this.textArray.length;
             }
             this._fullTxt = this.textArray[i];
-
 
             if (!this._isDeleting && this._txt === this._fullTxt) {
                 // text is fully written start deleting
